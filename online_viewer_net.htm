@@ -7,7 +7,7 @@
     margin: 0;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #050505;
     font-family: "Courier New", monospace;
     display: flex;
     align-items: center;
@@ -15,109 +15,128 @@
     overflow: hidden;
   }
 
-  .crt {
+  /* The Main "Glass" Container */
+  .monitor {
     position: relative;
-    width: 400px;
-    padding: 10px;
+    width: 450px;
+    height: 250px;
+    padding: 20px;
     background: #020202;
-    border-radius: 6px;
-    box-shadow:
-      inset 0 0 20px rgba(0,0,0,0.9),
-      0 0 25px rgba(179,0,0,0.25);
+    border: 2px solid #222;
+    border-radius: 50% / 5%; /* Subtle tube curvature */
+    box-shadow: 0 0 50px rgba(179,0,0,0.1);
     overflow: hidden;
-    transform: perspective(800px) rotateX(1deg);
-    animation: flicker 0.12s infinite;
   }
 
-  /* Scanlines overlay */
-  .crt::before {
-    content: "";
+  /* Animated Static Noise Overlay */
+  .monitor::before {
+    content: " ";
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.04),
-        rgba(255,255,255,0.04) 1px,
-        rgba(0,0,0,0.08) 2px
-      );
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBgMAAAAn2gnEAAAAFVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAASAynDAAAAAnRSTlNWmY6R9W8AAAAJcEhZcwAADsQAAA7EAZUrDhsAAAA0SURBVCjPY2AYBaNgFIyCUUAbwP//f4AQQPz/f8AIIv7/P2AEEf///wcG6P//f6AdpGAUjAIAmI8396S97u0AAAAASUVORK5CYII=");
+    opacity: 0.05;
+    z-index: 5;
     pointer-events: none;
-    z-index: 2;
+    animation: noise 0.2s infinite;
+  }
+
+  /* Scanlines and Vignette */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    /* Vignette effect */
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
   }
 
   .screen {
     position: relative;
-    animation: desync 6s infinite steps(1);
+    animation: flicker 0.15s infinite;
+    z-index: 2;
   }
 
   .file {
-    border: 2px solid #b30000;
-    padding: 12px 14px;
-    background: repeating-linear-gradient(0deg, #0b0b0b, #0b0b0b 2px, #0d0d0d 3px);
-    color: #e6e6e6;
+    border: 1px solid #b30000;
+    padding: 20px;
+    background: #080808;
+    color: #ff4444;
+    /* Phosphor Glow */
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.7);
   }
 
   .header {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: #ff4444;
-    margin-bottom: 8px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    opacity: 0.8;
   }
-
-  .title { font-size: 13px; margin-bottom: 10px; }
 
   button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
+    margin-top: 10px;
     background: transparent;
-    border: 2px solid #b30000;
+    border: 1px solid #ff4444;
     color: #ff4444;
     font-family: inherit;
+    font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(179,0,0,0.2);
   }
 
-  button:hover { background: #b30000; color: #000; }
-
-  .footer { margin-top: 8px; font-size: 10px; color: #777; text-align: center; }
+  button:hover {
+    background: #ff4444;
+    color: #000;
+  }
 
   @keyframes flicker {
-    0% { opacity: 1; }
-    50% { opacity: 0.98; }
-    100% { opacity: 1; }
+    0% { opacity: 0.983; }
+    50% { opacity: 0.995; }
+    100% { opacity: 0.976; }
   }
 
-  @keyframes desync {
-    0%, 92%, 96%, 100% { transform: translateX(0); }
-    93% { transform: translateX(-4px); }
-    94% { transform: translateX(3px); }
-    95% { transform: translateX(-2px); }
+  @keyframes noise {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    30% { transform: translate(5%, 5%); }
+    50% { transform: translate(-10%, 10%); }
+    70% { transform: translate(10%, -5%); }
   }
 </style>
 </head>
 <body>
 
-<div class="crt">
+<div class="monitor">
+  <div class="overlay"></div>
   <div class="screen">
     <div class="file">
       <div class="header">
-        <span>ESI ARCHIVE</span>
-        <span>CLASSIFIED</span>
+        <span>ARCHIVE_449</span>
+        <span>LEVEL_5_EYES_ONLY</span>
       </div>
 
-      <div class="title">
-        AUDIO LOG — SUBJECT MAE MATTER<br>
-        CLEARANCE LEVEL: 5
+      <div style="font-size: 14px; line-height: 1.4;">
+        FILE: MAE_MATTER.LOG<br>
+        STATUS: ENCRYPTED<br>
+        -------------------------
       </div>
 
       <audio id="audio" src="https://files.catbox.moe/cono4t.mp3"></audio>
 
       <button onclick="document.getElementById('audio').paused ? document.getElementById('audio').play() : document.getElementById('audio').pause()">
-        ▶ AUTHORIZED PLAYBACK
+        [ INITIALIZE AUDIO ]
       </button>
 
-      <div class="footer">
-        DO NOT DISTRIBUTE • BUREAU PROPERTY
+      <div style="margin-top: 15px; font-size: 9px; color: #444; text-align: center;">
+        UNAUTHORIZED ACCESS IS A FEDERAL OFFENSE
       </div>
     </div>
   </div>
