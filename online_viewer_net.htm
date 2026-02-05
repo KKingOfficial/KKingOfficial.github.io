@@ -1,51 +1,70 @@
-<iframe
-  width="420"
-  height="140"
-  frameborder="0"
-  srcdoc='
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <style>
-  body {
+  html, body {
     margin: 0;
-    background: #000000;
-    color: #e6e6e6;
+    width: 100%;
+    height: 100%;
+    background: #000;
     font-family: "Courier New", monospace;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    overflow: hidden;
+  }
+
+  .crt {
+    position: relative;
+    width: 400px;
+    padding: 10px;
+    background: #020202;
+    border-radius: 6px;
+    box-shadow:
+      inset 0 0 20px rgba(0,0,0,0.9),
+      0 0 25px rgba(179,0,0,0.25);
+    overflow: hidden;
+    transform: perspective(800px) rotateX(1deg);
+    animation: flicker 0.12s infinite;
+  }
+
+  /* Scanlines overlay */
+  .crt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.04) 1px,
+        rgba(0,0,0,0.08) 2px
+      );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .screen {
+    position: relative;
+    animation: desync 6s infinite steps(1);
   }
 
   .file {
     border: 2px solid #b30000;
     padding: 12px 14px;
-    width: 390px;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        #0b0b0b,
-        #0b0b0b 2px,
-        #0d0d0d 3px
-      );
-    box-shadow: 0 0 18px rgba(179, 0, 0, 0.35);
+    background: repeating-linear-gradient(0deg, #0b0b0b, #0b0b0b 2px, #0d0d0d 3px);
+    color: #e6e6e6;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    letter-spacing: 1px;
     color: #ff4444;
     margin-bottom: 8px;
   }
 
-  .title {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
+  .title { font-size: 13px; margin-bottom: 10px; }
 
   button {
     width: 100%;
@@ -54,51 +73,55 @@
     border: 2px solid #b30000;
     color: #ff4444;
     font-family: inherit;
-    letter-spacing: 1px;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: 0.2s;
   }
 
-  button:hover {
-    background: #b30000;
-    color: #0b0b0b;
+  button:hover { background: #b30000; color: #000; }
+
+  .footer { margin-top: 8px; font-size: 10px; color: #777; text-align: center; }
+
+  @keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.98; }
+    100% { opacity: 1; }
   }
 
-  .footer {
-    margin-top: 8px;
-    font-size: 10px;
-    color: #777;
-    text-align: center;
+  @keyframes desync {
+    0%, 92%, 96%, 100% { transform: translateX(0); }
+    93% { transform: translateX(-4px); }
+    94% { transform: translateX(3px); }
+    95% { transform: translateX(-2px); }
   }
 </style>
 </head>
 <body>
 
-<div class="file">
-  <div class="header">
-    <span>ESI ARCHIVE</span>
-    <span>CLASSIFIED</span>
-  </div>
+<div class="crt">
+  <div class="screen">
+    <div class="file">
+      <div class="header">
+        <span>ESI ARCHIVE</span>
+        <span>CLASSIFIED</span>
+      </div>
 
-  <div class="title">
-    AUDIO LOG — SUBJECT MAE MATTER<br>
-    CLEARANCE LEVEL: 5
-  </div>
+      <div class="title">
+        AUDIO LOG — SUBJECT MAE MATTER<br>
+        CLEARANCE LEVEL: 5
+      </div>
 
-  <audio id="audio">
-    <source src="https://files.catbox.moe/cono4t.mp3" type="audio/mpeg">
-  </audio>
+      <audio id="audio" src="https://files.catbox.moe/cono4t.mp3"></audio>
 
-  <button onclick="audio.paused ? audio.play() : audio.pause()">
-    ▶ AUTHORIZED PLAYBACK
-  </button>
+      <button onclick="document.getElementById('audio').paused ? document.getElementById('audio').play() : document.getElementById('audio').pause()">
+        ▶ AUTHORIZED PLAYBACK
+      </button>
 
-  <div class="footer">
-    DO NOT DISTRIBUTE • BUREAU PROPERTY
+      <div class="footer">
+        DO NOT DISTRIBUTE • BUREAU PROPERTY
+      </div>
+    </div>
   </div>
 </div>
 
 </body>
 </html>
-'
-></iframe>
