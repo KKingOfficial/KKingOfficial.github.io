@@ -15,7 +15,7 @@
     overflow: hidden;
   }
 
-  /* The Main "Glass" Container */
+
   .monitor {
     position: relative;
     width: 450px;
@@ -23,12 +23,12 @@
     padding: 20px;
     background: #020202;
     border: 2px solid #222;
-    border-radius: 50% / 5%; /* Subtle tube curvature */
+    border-radius: 50% / 5%; 
     box-shadow: 0 0 50px rgba(179,0,0,0.1);
     overflow: hidden;
   }
 
-  /* Animated Static Noise Overlay */
+
   .monitor::before {
     content: " ";
     position: absolute;
@@ -40,7 +40,7 @@
     animation: noise 0.2s infinite;
   }
 
-  /* Scanlines and Vignette */
+
   .overlay {
     position: absolute;
     inset: 0;
@@ -50,7 +50,6 @@
       linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
       linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 4px, 3px 100%;
-    /* Vignette effect */
     box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
   }
 
@@ -65,7 +64,6 @@
     padding: 20px;
     background: #080808;
     color: #ff4444;
-    /* Phosphor Glow */
     text-shadow: 0 0 5px rgba(255, 68, 68, 0.7);
   }
 
