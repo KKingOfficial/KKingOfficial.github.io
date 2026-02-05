@@ -1,1 +1,104 @@
-# KKingOfficial.github.io
+<iframe
+  width="420"
+  height="140"
+  frameborder="0"
+  srcdoc='
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    margin: 0;
+    background: #0b0b0b;
+    color: #e6e6e6;
+    font-family: "Courier New", monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .file {
+    border: 2px solid #b30000;
+    padding: 12px 14px;
+    width: 390px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        #0b0b0b,
+        #0b0b0b 2px,
+        #0d0d0d 3px
+      );
+    box-shadow: 0 0 18px rgba(179, 0, 0, 0.35);
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #ff4444;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 2px solid #b30000;
+    color: #ff4444;
+    font-family: inherit;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  button:hover {
+    background: #b30000;
+    color: #0b0b0b;
+  }
+
+  .footer {
+    margin-top: 8px;
+    font-size: 10px;
+    color: #777;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="file">
+  <div class="header">
+    <span>ESI ARCHIVE</span>
+    <span>CLASSIFIED</span>
+  </div>
+
+  <div class="title">
+    AUDIO LOG — SUBJECT MAE MATTER<br>
+    CLEARANCE LEVEL: 5
+  </div>
+
+  <audio id="audio">
+    <source src="https://files.catbox.moe/cono4t.mp3" type="audio/mpeg">
+  </audio>
+
+  <button onclick="audio.paused ? audio.play() : audio.pause()">
+    ▶ AUTHORIZED PLAYBACK
+  </button>
+
+  <div class="footer">
+    DO NOT DISTRIBUTE • BUREAU PROPERTY
+  </div>
+</div>
+
+</body>
+</html>
+'
+></iframe>
